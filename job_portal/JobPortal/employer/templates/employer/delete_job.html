@@ -1,0 +1,19 @@
+
+
+{% extends "base.html" %}
+
+{% block body_class %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="my-5">Delete Job</h1>
+    <p>Are you sure you want to delete the job "{{ job.title }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'employer:employer_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

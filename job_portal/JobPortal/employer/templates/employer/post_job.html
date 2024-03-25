@@ -1,0 +1,16 @@
+
+
+{% extends "base.html" %}
+
+{% block body_class %}{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h1 class="my-5">Post Job</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-dark" type="submit">Post Job</button>
+    </form>        
+</div>
+{% endblock %}

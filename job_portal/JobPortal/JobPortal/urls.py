@@ -22,9 +22,14 @@ urlpatterns += i18n_patterns(
     
     path(f"{settings.ADMIN_URL}/", admin.site.urls),
     
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),
+
+
     path("user/", include("user.urls", namespace="user")),
     path("api/v1/", include("user.api.urls", namespace="user_api")),
 
+    path("employer/", include("employer.urls", namespace="employer")),
+    # path("job-seeker/", include("job_seeker.urls", namespace="job_seeker")),
     
 
     
@@ -33,6 +38,8 @@ urlpatterns += i18n_patterns(
 
 if settings.DEBUG:
     urlpatterns += [
+
+
         # Testing 404 and 500 error pages
         path("404/", TemplateView.as_view(template_name="404.html"), name="404"),
         path("500/", TemplateView.as_view(template_name="500.html"), name="500"),

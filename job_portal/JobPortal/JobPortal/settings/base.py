@@ -214,6 +214,8 @@ INSTALLED_APPS = [
     "compressor",
     
 
+    "employer",
+
     
 ]
 
@@ -289,3 +291,5 @@ REST_FRAMEWORK = {
 }
 
 SENTRY_DSN = env.str("SENTRY_DSN", "")
+
+AUTH_USER_MODEL = 'user.User' 

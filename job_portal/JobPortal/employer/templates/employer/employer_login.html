@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+
+{% block body_class %}{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h1 class="my-5">Employer Login</h1>
+    <!-- Add your employer login form here -->
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-dark" type="submit">Login</button>
+  </form>
+  <a class="mt-5" href="{% url 'employer:employer_register' %}">Employer Register</a>
+  </div>
+{% endblock %}
