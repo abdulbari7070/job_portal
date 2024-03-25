@@ -8,6 +8,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LogoutView
 from .models import Job, EmployerProfile
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
 from django.contrib.auth import get_user_model
 
 
@@ -90,20 +94,31 @@ def dashboard(request):
     return render(request, 'employer/dashboard.html', {'job_count': job_count, 'job_application_count': 15, 'jobs': jobs})
 
 
-def post_job(request):
-    if not request.user.is_authenticated:
-        return redirect('employer:employer_login')
+# def post_job(request):
+#     if not request.user.is_authenticated:
+#         return redirect('employer:employer_login')
 
-    if request.method == 'POST':
-        form = JobForm(request.POST)
-        if form.is_valid():
-            job = form.save(commit=False)
-            job.employer = request.user
-            job.save()
-            return redirect('employer:employer_dashboard') 
-    else:
-        form = JobForm()
-    return render(request, 'employer/post_job.html', {'form': form})
+#     if request.method == 'POST':
+#         form = JobForm(request.POST)
+#         if form.is_valid():
+#             job = form.save(commit=False)
+#             job.employer = request.user
+#             job.save()
+#             return redirect('employer:employer_dashboard') 
+#     else:
+#         form = JobForm()
+#     return render(request, 'employer/post_job.html', {'form': form})
+
+
+class PostJobView(LoginRequiredMixin, CreateView):
+    template_name = 'employer/post_job.html'
+    form_class = JobForm
+    success_url = reverse_lazy('employer:employer_dashboard')
+
+    def form_valid(self, form):
+        job = form.save(commit=False)
+        job.employer = self.request.user
+        return super().form_valid(form)
 
 
 def edit_job(request, job_id):
