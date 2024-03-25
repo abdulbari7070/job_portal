@@ -18,6 +18,8 @@ class CustomLogoutView(LogoutView):
 
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('employer:employer_dashboard')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -30,6 +32,9 @@ def user_login(request):
 
 
 def employer_registration(request):
+    if request.user.is_authenticated:
+        return redirect('employer:employer_dashboard')
+
     if request.method == 'POST':
         user_form = EmployerRegistrationForm(request.POST)
         profile_form = EmployerProfileForm(request.POST)
@@ -49,6 +54,9 @@ def employer_registration(request):
 
 
 def edit_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('employer:employer_login')
+
     user_id =  request.user.id
     user = User.objects.get(pk=user_id)
     employer_profile = EmployerProfile.objects.get(user=user)
@@ -74,6 +82,8 @@ def edit_profile(request):
 
 
 def dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('employer:employer_login')
     job_count = Job.objects.filter(employer=request.user).count()
     jobs = Job.objects.filter(employer=request.user) 
     # job_application_count = JobApplication.objects.filter(job__employer=request.user).count()
@@ -81,6 +91,9 @@ def dashboard(request):
 
 
 def post_job(request):
+    if not request.user.is_authenticated:
+        return redirect('employer:employer_login')
+
     if request.method == 'POST':
         form = JobForm(request.POST)
         if form.is_valid():
@@ -94,6 +107,9 @@ def post_job(request):
 
 
 def edit_job(request, job_id):
+    if not request.user.is_authenticated:
+        return redirect('employer:employer_login')
+
     job = Job.objects.get(pk=job_id)
     if request.method == 'POST':
         form = JobForm(request.POST, instance=job)
@@ -106,6 +122,9 @@ def edit_job(request, job_id):
 
 
 def delete_job(request, job_id):
+    if not request.user.is_authenticated:
+        return redirect('employer:employer_login')
+
     job = get_object_or_404(Job, pk=job_id)
     if request.method == 'POST':
         job.delete()
