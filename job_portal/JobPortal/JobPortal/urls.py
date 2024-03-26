@@ -29,7 +29,7 @@ urlpatterns += i18n_patterns(
     path("api/v1/", include("user.api.urls", namespace="user_api")),
 
     path("employer/", include("employer.urls", namespace="employer")),
-    # path("job-seeker/", include("job_seeker.urls", namespace="job_seeker")),
+    path("job-seeker/", include("job_seeker.urls", namespace="job_seeker")),
     
 
     

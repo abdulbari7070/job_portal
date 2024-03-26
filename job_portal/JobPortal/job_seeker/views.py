@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from employer.models import Job
 
-# Create your views here.
+
+def dashboard(request):
+    jobs = Job.objects.all() 
+    return render(request, 'job_seeker/dashboard.html', {'jobs': jobs})

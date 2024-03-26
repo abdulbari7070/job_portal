@@ -215,7 +215,7 @@ INSTALLED_APPS = [
     
 
     "employer",
-
+    "job_seeker",
     
 ]
 
